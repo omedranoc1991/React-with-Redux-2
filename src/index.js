@@ -22,26 +22,31 @@ import SeasonDisplay from './SeasonDisplay'
 
 class App extends React.Component {
     
-    constructor(props){
+  /*  constructor(props){
         super(props)
-        // initialize the state
-        this.state = {lat : null, error : ''}
         
-        //get current position; the firts argument is an object that contain all the information of the current position
-        navigator.geolocation.getCurrentPosition( 
+        // initialize the state
+        this.state = {lat : null, error : ''}     
+              
+    }*/
+
+    state = {lat : null, error : ''}
+
+    componentDidMount(){
+          //get current position; the firts argument is an object that contain all the information of the current position
+          navigator.geolocation.getCurrentPosition( 
             (position) =>{
                 //update the state
                 this.setState({lat : position.coords.latitude})},
             (err) => {
                 this.setState({error : err.message })
             }
-        )      
-        
+        )     
     }
 
     render(){        
        if(this.state.lat && !this.state.error){
-           return <div>Latitud : {this.state.lat}</div>
+           return <SeasonDisplay lat={this.state.lat}/>
        }
        if(!this.state.lat && this.state.error){
            return <div>Error : {this.state.error}</div>
